@@ -150,6 +150,28 @@ void TestNoncopiableErase() {
     cout << "Done!"s << endl << endl;
 }
 
+void TestEmplaceBack() {
+    std::cout << "Test emplace back" << std::endl;
+    SimpleVector<std::pair<int, std::string>> vec;
+    vec.emplace_back(1, "object one");
+    vec.emplace_back(2, "object two");
+    assert(vec.GetSize() == 2);
+    assert(vec[0].first == 1 && vec[0].second == "object one");
+    assert(vec[1].first == 2 && vec[1].second == "object two");
+    std::cout << "Done!" << std::endl << std::endl;
+}
+
+void TestEmplace() {
+    std::cout << "Test emplace" << std::endl;
+    SimpleVector<std::pair<int, std::string>> vec;
+    vec.emplace(vec.begin(), 3, "cat");
+    vec.emplace(vec.end(), 4, "dog");
+    assert(vec.GetSize() == 2);
+    assert(vec[0].first == 3 && vec[0].second == "cat");
+    assert(vec[1].first == 4 && vec[1].second == "dog");
+    std::cout << "Done!" << std::endl << std::endl;
+}
+
 int main() {
     TestTemporaryObjConstructor();
     TestTemporaryObjOperator();
@@ -159,5 +181,7 @@ int main() {
     TestNoncopiablePushBack();
     TestNoncopiableInsert();
     TestNoncopiableErase();
+    TestEmplaceBack();
+    TestEmplace();
     return 0;
 }
