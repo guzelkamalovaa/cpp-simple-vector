@@ -1,20 +1,5 @@
 #pragma once
-
-#include <algorithm>
-#include <cassert>
-#include <initializer_list>
-#include <stdexcept>
-#include <utility>
-#include <new>
-
-struct ReserveType {
-    size_t capacity;
-    explicit ReserveType(size_t cap) : capacity(cap) {}
-};
-
-inline ReserveType Reserve(size_t cap) {
-    return ReserveType(cap);
-}
+#include "array_ptr.h"
 
 template <typename Type>
 class SimpleVector {
@@ -60,20 +45,12 @@ public:
     }
 
     SimpleVector& operator=(SimpleVector&& rhs) noexcept {
-        if (this != &rhs) {
-            DestroyElements();
-            operator delete(data_);
-
-            size_ = rhs.size_;
-            capacity_ = rhs.capacity_;
-            data_ = rhs.data_;
-
-            rhs.size_ = 0;
-            rhs.capacity_ = 0;
-            rhs.data_ = nullptr;
-        }
-        return *this;
+    if (this != &rhs) {
+        SimpleVector tmp(std::move(rhs)); 
+        swap(tmp);                        
     }
+    return *this;
+}
 
     void PushBack(const Type& item) {
         EmplaceBack(item);

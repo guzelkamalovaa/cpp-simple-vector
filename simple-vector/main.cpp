@@ -62,7 +62,7 @@ void TestNamedMoveConstructor() {
     SimpleVector<int> vector_to_move(GenerateVector(size));
     assert(vector_to_move.GetSize() == size);
 
-    SimpleVector<int> moved_vector(move(vector_to_move));
+    SimpleVector<int> moved_vector(std::move(vector_to_move));
     assert(moved_vector.GetSize() == size);
     assert(vector_to_move.GetSize() == 0);
     cout << "Done!"s << endl << endl;
@@ -74,7 +74,7 @@ void TestNamedMoveOperator() {
     SimpleVector<int> vector_to_move(GenerateVector(size));
     assert(vector_to_move.GetSize() == size);
 
-    SimpleVector<int> moved_vector = move(vector_to_move);
+    SimpleVector<int> moved_vector = std::move(vector_to_move);
     assert(moved_vector.GetSize() == size);
     assert(vector_to_move.GetSize() == 0);
     cout << "Done!"s << endl << endl;
@@ -88,7 +88,7 @@ void TestNoncopiableMoveConstructor() {
         vector_to_move.PushBack(X(i));
     }
 
-    SimpleVector<X> moved_vector = move(vector_to_move);
+    SimpleVector<X> moved_vector = std::move(vector_to_move);
     assert(moved_vector.GetSize() == size);
     assert(vector_to_move.GetSize() == 0);
 
@@ -153,8 +153,8 @@ void TestNoncopiableErase() {
 void TestEmplaceBack() {
     std::cout << "Test emplace back" << std::endl;
     SimpleVector<std::pair<int, std::string>> vec;
-    vec.emplace_back(1, "object one");
-    vec.emplace_back(2, "object two");
+    vec.EmplaceBack(1, "object one");
+    vec.EmplaceBack(2, "object two");
     assert(vec.GetSize() == 2);
     assert(vec[0].first == 1 && vec[0].second == "object one");
     assert(vec[1].first == 2 && vec[1].second == "object two");
@@ -164,8 +164,8 @@ void TestEmplaceBack() {
 void TestEmplace() {
     std::cout << "Test emplace" << std::endl;
     SimpleVector<std::pair<int, std::string>> vec;
-    vec.emplace(vec.begin(), 3, "cat");
-    vec.emplace(vec.end(), 4, "dog");
+    vec.Emplace(vec.begin(), 3, "cat");
+    vec.Emplace(vec.end(), 4, "dog");
     assert(vec.GetSize() == 2);
     assert(vec[0].first == 3 && vec[0].second == "cat");
     assert(vec[1].first == 4 && vec[1].second == "dog");
